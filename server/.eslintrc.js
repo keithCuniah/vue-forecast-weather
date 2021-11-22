@@ -11,6 +11,7 @@ module.exports = {
   },
   rules: {
     'linebreak-style': ['error', process.platform === 'win32' ? 'windows' : 'unix'],
+    'no-extra-boolean-cast': false,
     'comma-dangle': 'off',
     'no-console': 'off',
     'prefer-destructuring': [
