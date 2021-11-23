@@ -1,40 +1,14 @@
 const axios = require('axios');
+const utils = require('../shared/utils');
 
-function weatherForecastController( apiKey, listOfCountries, objectGroupByCountry) {
-
-  async function getCountries(req, res) {
-    console.log('Get all countries');
-    try {
-      res.send(listOfCountries);
-      console.log(' Data have been found');
-    } catch (err) {
-      res.send("Ressources not found, can't find any country");
-      console.log(` Call in error : ${err}`);
-    }
-  }
-
-  async function getCitiesByCountry(req, res) {
-    const country = req.params.countryUnicode.toUpperCase();
-
-    console.log(`Get all cities of country : ${country}`);
-
-    try {
-      const cities = objectGroupByCountry[country];
-      res.json(cities);
-      console.log(' Data have been found');
-    } catch (err) {
-      res.send(
-        `Ressources not found, can't find any cities of country  ${country}`
-      );
-      console.log(` Call in error : ${err}`);
-    }
-  }
-
+function weatherForecastController(apiKey) {
   const getWeatherOrForecastByLocationId = async (req, res) => {
     const params = {
       appid: apiKey,
-      id: 2967103,
+      id: req.params.locationID,
       units: 'metric',
+      lat: req.params.lat,
+      long: req.params.long,
     };
 
     let weatherOrForecast;
@@ -57,17 +31,27 @@ function weatherForecastController( apiKey, listOfCountries, objectGroupByCountr
 
     try {
       const result = await axios.get(url, { params });
-      res.json(result.data);
+      const formattedData = formatWeatherResponse(result.data);
+      res.json(formattedData);
       console.log(' Call in success');
     } catch (err) {
-      res.send(
+      res.status(404).send(
         `Ressources not found, can't find any ${weatherOrForecast} data for the location : ${req.params.locationID}`
       );
       console.log(` Call in error : ${err}`);
     }
   };
 
-  return { getCountries, getCitiesByCountry, getWeatherOrForecastByLocationId };
+  return { getWeatherOrForecastByLocationId };
+}
+function formatWeatherResponse(responseData) {
+  const { id, name, sys, weather, wind, main } = responseData;
+  const country = utils.getFullCountryName(sys.country);
+  const { temp, humidity } = { main };
+  const formattedTemperature = { temp, humidity };
+  const formattedWeather = { id: weather[0].id, icon: weather[0].icon };
+  const formattedObj = { id, name, country, weather: formattedWeather, wind };
+  return formattedObj;
 }
 
 module.exports = weatherForecastController;

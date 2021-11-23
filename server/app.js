@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
+const utils = require('./shared/utils');
 
 const app = express();
 app.use(cors());
@@ -11,15 +12,19 @@ const rawdata = fs.readFileSync('city.list.min.json');
 const rawDataJson = JSON.parse(rawdata);
 
 const rawDataGroupByCountry = rawDataJson.reduce((acc, location) => {
-  const country = acc[location.country] || [];
+  const countryfullName = utils.getFullCountryName(location.country);
+  const country = acc[countryfullName] || [];
   country.push(location);
-  acc[location.country] = country;
+  acc[countryfullName] = country;
   return acc;
 }, {});
 
 const listOfCountries = Object.keys(rawDataGroupByCountry);
 
-const weatherForecastRouter = require('./routes/weatherForecastRouter')(listOfCountries, rawDataGroupByCountry);
+const weatherForecastRouter = require('./routes/weatherForecastRouter')(
+  listOfCountries,
+  rawDataGroupByCountry
+);
 app.use('/api', weatherForecastRouter);
 
 // Endpoint
@@ -52,9 +57,16 @@ app.get('/api', (req, res) => {
           <b>/api/forecasst/{localisation_id}</b>
         </li>
       </ul>
-    </div>`);
+    </div>`
+  );
 });
 
 app.listen(port, () => {
   console.log(`Running on port ${port}`);
 });
+
+// function getFullCountryName(unicodeFlag) {
+//   // From unicode name return full name of a specific country
+//   const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+//   return regionNames.of(unicodeFlag);
+// }
