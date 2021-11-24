@@ -4,53 +4,46 @@
       <h1 class='display-5 fw-bold'>Weather and forecast</h1>
       <p class='lead'>Please select a location</p>
     </div>
-    <FormularBIS />
-    <Formular
-      v-if='this.countries.length > 0'
-      :countries='countries'
-      @getSelectedCountry='(_country) => this.getCities(_country)'
-      :cities='cities'
-      @submittedForm='
-        (_submittedForm) => {
-          this.selectedLocation = _submittedForm;
-          this.getWeatherAndForecast(_submittedForm);
-        }
-      '
-    />
-    <div class='mb-3'>
-      <b-button v-b-toggle="'form-collapse'" variant='primary' @click.prevent
-        >Select location</b-button
-      >
-    </div>
-    <b-collapse id='form-collapse' class='m-4'>
-      <!-- <Formular
+    <div class='container-fluid'>
+      <Formular
         v-if='this.countries.length > 0'
         :countries='countries'
         @getSelectedCountry='(_country) => this.getCities(_country)'
         :cities='cities'
+        @formIsReset='showCard = false'
         @submittedForm='
           (_submittedForm) => {
-            this.selectedLocation = _submittedForm;
+            this.selectedLocation = JSON.parse(_submittedForm);
             this.getWeatherAndForecast(_submittedForm);
           }
         '
-      /> -->
-    </b-collapse>
+      />
+    </div>
 
-    <Card />
-    <pre>
-      {{ weather }}
-    </pre>
-    <pre>
-      {{ forecast }}
-    </pre>
+    <CardInformation
+      v-if='showCard'
+    >
+      <template v-slot:header>
+        <CardHeader
+          :city='JSON.parse(selectedLocation.selectedCity)'
+          :country='selectedLocation.selectedCountry'
+          :currentWeather='weatherAndForecast.current'
+        />
+      </template>
+      <template v-slot:content>
+        <CardContent
+          :listOfValues='weatherAndForecast.daily'
+        />
+      </template>
+    </CardInformation>
   </div>
 </template>
 
 <script>
-// import { BCollapse, BButton, VBToggle } from 'bootstrap-vue';
 import Formular from '../components/Formular.vue';
-import Card from '../components/Card.vue';
+import CardInformation from '../components/Card/Card.vue';
+import CardHeader from '../components/Card/CardHeader.vue';
+import CardContent from '../components/Card/CardContent.vue';
 import CountryService from '../services/CountryService';
 import ForecastWeatherService from '../services/ForecastWeatherService';
 
@@ -58,12 +51,9 @@ export default {
   name: 'WeatherForecastPage',
   components: {
     Formular,
-    // BCollapse,
-    // BButton,
-    Card,
-  },
-  directives: {
-    // 'b-toggle': VBToggle,
+    CardInformation,
+    CardHeader,
+    CardContent,
   },
   data() {
     return {
@@ -71,9 +61,11 @@ export default {
         selectedCountry: '',
         selectedCity: '',
       },
+      showCard: false,
       countries: [],
       cities: [],
-      weather: [],
+      weatherAndForecast: [],
+      currentWeather: [],
       forecast: [],
     };
   },
@@ -92,16 +84,11 @@ export default {
     },
     async getWeatherAndForecast(selectedForm) {
       const { selectedCity } = { ...JSON.parse(selectedForm) };
-      await ForecastWeatherService.getWeatherOrForecastByCity('weather', selectedCity).then(
+      await ForecastWeatherService.getWeatherForecastByCity('weather', selectedCity).then(
         (response) => {
           console.log('weather', response.data);
-          this.weather = response.data;
-        }
-      );
-      await ForecastWeatherService.getWeatherOrForecastByCity('forecast', selectedCity).then(
-        (response) => {
-          console.log('forecast', response.data);
-          this.forecast = response.data;
+          this.weatherAndForecast = response.data;
+          this.showCard = true;
         }
       );
     },

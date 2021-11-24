@@ -1,4 +1,4 @@
-# client
+# forecast-client
 
 ## Project setup
 ```

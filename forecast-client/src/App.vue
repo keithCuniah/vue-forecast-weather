@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
+  <div id='app'>
+    <!-- <img alt='Vue logo' src='./assets/logo.png'> -->
     <WeatherForecast />
   </div>
 </template>
@@ -16,5 +16,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang='scss'></style>

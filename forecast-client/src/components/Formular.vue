@@ -1,5 +1,5 @@
 <template>
-  <div class='container-sm border border-light shadow rounded p-4'>
+  <div class='container-sm border border-light shadow rounded p-4 mb-4'>
     <form @submit='onSubmit' @reset='onReset' v-if='showForm'>
       <div class='input-group mb-3'>
         <b-form-input
@@ -28,50 +28,26 @@
             {{ city.name }}
           </option>
         </b-form-select>
-
-        <select
-          class='form-check-input'
-          list='input-cities'
-          v-model='selectedForm.selectedCity'
-          aria-label='Select a city'
-          autocomplete='off'
-          type='search'
-          aria-placeholder='Select a city'
-          placeholder='Select a city'
-          :disabled='disableInputCity'
-        >
-          <option v-for='city in cities' :key='city.id' :value='JSON.stringify(city)'>
-            {{ city.name }}
-          </option>
-        </select>
       </div>
-      <b-button type='submit' variant='primary' :disabled='disableSubmit'>Submit</b-button>
+      <b-button
+        type='submit'
+        :variant="disableSubmit ? 'secondary' : 'primary' "
+        :disabled='disableSubmit'
+        >Submit</b-button
+      >
       <b-button type='reset' variant='danger'>Reset</b-button>
     </form>
-    <pre>{{ selectedForm }} </pre>
   </div>
-
-  <!-- <form>
-    <div class='form-row'>
-      <div class='form-group col-md-6'>
-        <label for='inputCity'>City</label>
-        <input type='text' class='form-control' id='inputCity' />
-      </div>
-      <div class='form-group col-md-4'>
-        <label for='inputState'>State</label>
-        <select id='inputState' class='form-control'>
-          <option selected>Choose...</option>
-          <option>...</option>
-        </select>
-      </div>
-    </div>
-    <button type='submit' class='btn btn-primary'>Sign in</button>
-  </form> -->
 </template>
 
 <script>
+import { BButton } from 'bootstrap-vue';
+
 export default {
   name: 'Formular',
+  components: {
+    BButton,
+  },
   props: {
     countries: {
       type: Array,
@@ -119,6 +95,7 @@ export default {
     onReset(event) {
       event.preventDefault();
       // Reset our form values
+      this.$emit('formIsReset');
       this.selectedForm.selectedCountry = '';
       this.selectedForm.selectedCity = '';
       this.disableInputCity = true;
