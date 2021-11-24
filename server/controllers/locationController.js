@@ -1,9 +1,9 @@
 function locationController(listOfCountries, objectGroupByCountry) {
+  // Controller for getting location as countries and cities from a specific country
+
   async function getCountries(req, res) {
-    console.log('Get all countries');
     try {
       res.send(listOfCountries);
-      console.log(' Data have been found');
     } catch (err) {
       res.send("Ressources not found, can't find any country");
       console.log(` Call in error : ${err}`);
@@ -12,13 +12,9 @@ function locationController(listOfCountries, objectGroupByCountry) {
 
   async function getCitiesByCountry(req, res) {
     const country = req.params.countryUnicode.toUpperCase();
-
-    console.log(`Get all cities of country : ${country}`);
-
     try {
       const cities = objectGroupByCountry[country];
       res.json(cities);
-      console.log(' Data have been found');
     } catch (err) {
       res.send(
         `Ressources not found, can't find any cities of country  ${country}`

@@ -1,10 +1,9 @@
 const axios = require('axios');
-const utils = require('../shared/utils');
 
 function weatherForecastController(apiKey) {
-  const getWeatherOrForecastByLocationId = async (req, res) => {
-    console.log('controller', req.headers);
+// Controller for getting current weather and forecast data (7 days) by coordinate
 
+  const getWeatherForecastByCoord = async (req, res) => {
     const params = {
       appid: apiKey,
       uniots: 'metric',
@@ -15,17 +14,9 @@ function weatherForecastController(apiKey) {
 
     const url = 'https://api.openweathermap.org/data/2.5/onecall';
 
-    console.log(
-      `Get weather and forecast of location : ${req.params.locationID}`
-    );
-    console.log(params);
     try {
       const result = await axios.get(url, { params });
-      // const formattedData = formatWeatherResponse(result.data);
-      // res.json(formattedData);
-      // console.log(result);
       res.json(result.data);
-      console.log(' Call in success');
     } catch (err) {
       res
         .status(404)
@@ -36,10 +27,7 @@ function weatherForecastController(apiKey) {
     }
   };
 
-  return { getWeatherOrForecastByLocationId };
-}
-function formatWeatherResponse(responseData) {
-  return formattedObj;
+  return { getWeatherForecastByCoord };
 }
 
 module.exports = weatherForecastController;

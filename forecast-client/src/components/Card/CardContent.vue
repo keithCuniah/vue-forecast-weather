@@ -28,11 +28,6 @@ export default {
       default: () => 5,
     },
   },
-  computed: {
-    listLength() {
-      return this.listOfValues.length;
-    },
-  },
 };
 </script>
 

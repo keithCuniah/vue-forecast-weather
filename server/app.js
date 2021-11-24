@@ -8,19 +8,13 @@ app.use(cors());
 const port = process.env.PORT || 3000;
 
 // get data from city.list
-const rawdata = fs.readFileSync('city.list.min.json');
-const rawDataJson = JSON.parse(rawdata);
+const rawDataJson = JSON.parse(fs.readFileSync('city.list.min.json'));
 
-const rawDataGroupByCountry = rawDataJson.reduce((acc, location) => {
-  const countryfullName = utils.getFullCountryName(location.country);
-  const country = acc[countryfullName] || [];
-  country.push(location);
-  acc[countryfullName] = country;
-  return acc;
-}, {});
+//get object{country:cities} and list[country]
+const { rawDataGroupByCountry, listOfCountries } =
+  utils.getCitiesGroupByCountry(rawDataJson, utils.getFullCountryName);
 
-const listOfCountries = Object.keys(rawDataGroupByCountry);
-
+  
 const weatherForecastRouter = require('./routes/weatherForecastRouter')(
   listOfCountries,
   rawDataGroupByCountry
@@ -64,9 +58,3 @@ app.get('/api', (req, res) => {
 app.listen(port, () => {
   console.log(`Running on port ${port}`);
 });
-
-// function getFullCountryName(unicodeFlag) {
-//   // From unicode name return full name of a specific country
-//   const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
-//   return regionNames.of(unicodeFlag);
-// }

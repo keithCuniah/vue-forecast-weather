@@ -6,7 +6,6 @@ export default {
     return res;
   },
   async getCitiesByCountry(_country) {
-    console.log(_country);
     const res = await axios.get(`http://localhost:4000/api/countries/${_country}`);
     return res;
   },

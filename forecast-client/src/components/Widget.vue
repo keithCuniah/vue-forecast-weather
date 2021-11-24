@@ -38,7 +38,13 @@ export default {
   },
   computed: {
     formatDate() {
-      const formatDate = new Date(this.day);
+      const dateNow = new Date();
+      const formatDateNow = this.shapeDate(dateNow);
+
+      const forecastDate = new Date(this.day * 1000);
+      const formatForecastDate = this.shapeDate(forecastDate);
+      if (formatDateNow === formatForecastDate) return 'Today';
+
       const weekday = new Array(7);
       weekday[0] = 'Sunday';
       weekday[1] = 'Monday';
@@ -47,7 +53,8 @@ export default {
       weekday[4] = 'Thursday';
       weekday[5] = 'Friday';
       weekday[6] = 'Saturday';
-      const forecastDay = weekday[formatDate.getDay()];
+
+      const forecastDay = weekday[forecastDate.getDay()];
       return forecastDay;
     },
     forecastIcon() {
@@ -58,7 +65,12 @@ export default {
     tempKelvinToCelcius(temp) {
       return `${Math.round(temp - 273.15)}ºC`;
     },
-  }
+  },
+  methods: {
+    shapeDate(dateValue) {
+      return `${dateValue.getDate()}/${dateValue.getMonth()}/${dateValue.getFullYear()}`;
+    }
+  },
 };
 </script>
 

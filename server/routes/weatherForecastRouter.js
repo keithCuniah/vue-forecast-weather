@@ -21,10 +21,12 @@ function routes(listOfCountries, rawDataGroupByCountry) {
     .route('/countries/:countryUnicode')
     .get(_locationController.getCitiesByCountry);
 
-  // Route for current and forecast weather of one country or one city
+  // Route for current weather and forecast from a city
+  // NOTE: In the api, a city can have several coordinate
+  //   the link which call the data use coordinate as parametes
   weatherForecastRouter
     .route('/:weatherOrForecast/:locationID')
-    .get(_weatherForecastcontroller.getWeatherOrForecastByLocationId);
+    .get(_weatherForecastcontroller.getWeatherForecastByCoord);
   return weatherForecastRouter;
 }
 

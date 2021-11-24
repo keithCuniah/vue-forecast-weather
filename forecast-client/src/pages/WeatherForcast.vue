@@ -76,9 +76,7 @@ export default {
   },
   methods: {
     async getCities(_country) {
-      console.log('method', _country);
       await CountryService.getCitiesByCountry(_country).then((response) => {
-        console.log(_country, response.data);
         this.cities = response.data;
       });
     },
@@ -86,7 +84,6 @@ export default {
       const { selectedCity } = { ...JSON.parse(selectedForm) };
       await ForecastWeatherService.getWeatherForecastByCity('weather', selectedCity).then(
         (response) => {
-          console.log('weather', response.data);
           this.weatherAndForecast = response.data;
           this.showCard = true;
         }
