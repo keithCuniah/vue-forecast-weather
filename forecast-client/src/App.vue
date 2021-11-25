@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import WeatherForecast from './pages/WeatherForcast.vue';
+import WeatherForecast from './pages/WeatherForcastPage.vue';
 
 export default {
   name: 'App',

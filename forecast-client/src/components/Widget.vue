@@ -11,7 +11,7 @@
 
 <script>
 import IconComponent from './IconComponent/Icon.vue';
-import utils from './shared';
+import utils from './shared/utils';
 
 export default {
   name: 'Widget',
@@ -38,38 +38,14 @@ export default {
   },
   computed: {
     formatDate() {
-      const dateNow = new Date();
-      const formatDateNow = this.shapeDate(dateNow);
-
       const forecastDate = new Date(this.day * 1000);
-      const formatForecastDate = this.shapeDate(forecastDate);
-      if (formatDateNow === formatForecastDate) return 'Today';
-
-      const weekday = new Array(7);
-      weekday[0] = 'Sunday';
-      weekday[1] = 'Monday';
-      weekday[2] = 'Tuesday';
-      weekday[3] = 'Wednesday';
-      weekday[4] = 'Thursday';
-      weekday[5] = 'Friday';
-      weekday[6] = 'Saturday';
-
-      const forecastDay = weekday[forecastDate.getDay()];
+      if (utils.compareDateToDateNow(forecastDate)) return 'Today';
+      const forecastDay = utils.findWeekDateOfDate(forecastDate);
       return forecastDay;
     },
     forecastIcon() {
       return utils.getIconByWeatherId(this.weatherId);
     },
-  },
-  filters: {
-    tempKelvinToCelcius(temp) {
-      return `${Math.round(temp - 273.15)}ºC`;
-    },
-  },
-  methods: {
-    shapeDate(dateValue) {
-      return `${dateValue.getDate()}/${dateValue.getMonth()}/${dateValue.getFullYear()}`;
-    }
   },
 };
 </script>

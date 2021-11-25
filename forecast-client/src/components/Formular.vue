@@ -1,7 +1,7 @@
 <template>
-  <div class='container-sm border border-light shadow rounded p-4 mb-4'>
+  <div class='container-sm w-50 border border-secondary rounded p-4 mb-4'>
     <form @submit='onSubmit' @reset='onReset' v-if='showForm'>
-      <div class='input-group mb-3'>
+      <div class='form-group m-2'>
         <b-form-input
           list='input-countries'
           v-model='selectedForm.selectedCountry'
@@ -11,11 +11,14 @@
           @change='emitSelectedCountry()'
           aria-placeholder='Select a country'
           placeholder='Select a country'
+          aria-describedby='countryHelp'
         />
+        <small id='countryHelp' class='form-text text-muted'> First select a country </small>
         <datalist id='input-countries'>
           <option v-for='country in countries' :key='country' :value='country'></option>
         </datalist>
-
+      </div>
+      <div class='form-group m-2'>
         <b-form-select
           id='inputState'
           class='form-select'
@@ -29,13 +32,20 @@
           </option>
         </b-form-select>
       </div>
-      <b-button
-        type='submit'
-        :variant="disableSubmit ? 'secondary' : 'primary' "
-        :disabled='disableSubmit'
-        >Submit</b-button
-      >
-      <b-button type='reset' variant='danger'>Reset</b-button>
+      <div class='d-inline-flex'>
+        <div class="m-1">
+          <b-button
+            type='submit'
+            :variant="disableSubmit ? 'secondary' : 'primary'"
+            :disabled='disableSubmit'
+          >
+            Submit
+          </b-button>
+        </div>
+        <div class='m-1'>
+          <b-button type='reset' variant='danger'> Reset </b-button>
+        </div>
+      </div>
     </form>
   </div>
 </template>
@@ -67,6 +77,7 @@ export default {
         selectedCountry: '',
         selectedCity: '',
       },
+      selectedCity: '',
       disableInputCity: true,
     };
   },

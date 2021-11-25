@@ -1,23 +1,21 @@
 <template>
   <div class='card-info'>
-    <div class='icon-component'>
-      <IconComponent :name="weatherIcon" :colorFill="'white'" />
-    </div>
+    <div class='icon-component'><IconComponent :name='weatherIcon' :colorFill="'white'"  /></div>
     <div class='descriptions'>
       <span class='description-item'
         >{{ city.name | capitalizedStr }}, {{ country | capitalizedStr }}
       </span>
-      <span class='description-item'>{{ currentWeather | tempKelvinToCelcius }}</span>
-      <span class='description-item'>{{ currentWeather | formatHumidity }} </span>
-      <span class='description-item'>{{ currentWeather | formatUVI }} </span>
-      <span class='description-item'>{{ currentWeather | formatWind }} </span>
+      <span class='description-item'>{{ currentInfo.temp | tempKelvinToCelcius }}</span>
+      <span class='description-item'>{{ currentInfo.humidity | formatHumidity }} </span>
+      <span class='description-item'>{{ currentInfo.uvi | formatUVI }} </span>
+      <span class='description-item'>{{ { ...currentInfo.wind } | formatWind }} </span>
     </div>
   </div>
 </template>
 
 <script>
 import IconComponent from '../IconComponent/Icon.vue';
-import utils from '../shared';
+import utils from '../shared/utils';
 
 export default {
   name: 'CardHeader',
@@ -35,32 +33,25 @@ export default {
       type: Object,
     },
   },
-  filters: {
-    capitalizedStr(str) {
-      const firstLetter = str.charAt(0);
-      const otherLetter = str.slice(1);
-      return firstLetter.toUpperCase() + otherLetter.toLowerCase();
-    },
-    tempKelvinToCelcius(currentWeather) {
-      const { temp } = { ...currentWeather };
-      return `${Math.round(temp - 273.15)}º`;
-    },
-    formatHumidity(currentWeather) {
-      const { humidity } = { ...currentWeather };
-      return `Humidity: ${humidity}%`;
-    },
-    formatUVI(currentWeather) {
-      const { uvi } = { ...currentWeather };
-      return `UVI: ${uvi}`;
-    },
-    formatWind(currentWeather) {
-      return `Wind: ${currentWeather.wind_deg} ${currentWeather.wind_speed}KM/h`;
-    },
-  },
   computed: {
+    currentInfo() {
+      const {
+        temp,
+        humidity,
+        uvi,
+        wind_deg,
+        wind_speed
+      } = { ...this.currentWeather };
+      return {
+        temp,
+        humidity,
+        uvi,
+        wind: { wind_deg, wind_speed },
+      };
+    },
     weatherIcon() {
       return utils.getIconByWeatherId(this.currentWeather.weather[0].id);
-    }
+    },
   },
 };
 </script>

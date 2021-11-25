@@ -14,7 +14,11 @@ const getCitiesGroupByCountry = function (rawDataJson, getFullCountryName) {
     return acc;
   }, {});
 
-  const listOfCountries = Object.keys(rawDataGroupByCountry);
+  const listOfCountries = Object.keys(rawDataGroupByCountry).map(
+    (country, id) => {
+      return { country, id };
+    }
+  );
 
   return { rawDataGroupByCountry, listOfCountries };
 };

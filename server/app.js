@@ -14,7 +14,6 @@ const rawDataJson = JSON.parse(fs.readFileSync('city.list.min.json'));
 const { rawDataGroupByCountry, listOfCountries } =
   utils.getCitiesGroupByCountry(rawDataJson, utils.getFullCountryName);
 
-  
 const weatherForecastRouter = require('./routes/weatherForecastRouter')(
   listOfCountries,
   rawDataGroupByCountry
