@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class='p-3 mb-2 bg-light'>
-    <h2 class='displqy-9 fw-bold'>Select a location</h2>
+    <h2 class='display-9 fw-bold'>Select a location</h2>
     <p class='lead'>Choose a country and then a city</p>
   </div>
   <form class='formular' @submit='onSubmit' @reset='onReset' v-if='showForm'>
@@ -89,11 +89,11 @@ export default {
     onSubmit(event) {
       event.preventDefault();
       this.$emit('submittedForm', JSON.stringify(this.selectedForm));
+      this.onReset(event);
     },
     onReset(event) {
       event.preventDefault();
       // Reset our form values
-      this.$emit('formIsReset');
       this.selectedForm.selectedCountry = '';
       this.selectedForm.selectedCity = '';
       this.disableInputCity = true;

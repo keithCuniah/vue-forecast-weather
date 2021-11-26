@@ -15,15 +15,12 @@
       <template>
         <div class="drawer-content">
           <FormularLocation
+            :key='key'
             :countries='countries'
             @selectedCountry='(_country) => this.getCities(_country)'
             :cities='cities'
             @submittedForm='
-              (_submittedForm) => {
-                this.selectedLocation = JSON.parse(_submittedForm);
-                this.getWeatherAndForecast(_submittedForm);
-              }
-            '
+              (_submittedForm) => onSubmittedFormEvent(_submittedForm)'
           />
         </div>
       </template>
@@ -77,9 +74,8 @@ export default {
       countries: [],
       cities: [],
       weatherAndForecast: [],
-      currentWeather: [],
-      forecast: [],
       showDrawer: false,
+      key: 0,
     };
   },
   async created() {
@@ -88,6 +84,12 @@ export default {
     });
   },
   methods: {
+    onSubmittedFormEvent(_submittedForm) {
+      this.selectedLocation = JSON.parse(_submittedForm);
+      this.getWeatherAndForecast(_submittedForm);
+      this.showDrawer = false;
+      this.key += 1; // to rerender the formular qnd not sqve previous data
+    },
     async getCities(_country) {
       await CountryService.getCitiesByCountry(_country).then((response) => {
         this.cities = response.data;
