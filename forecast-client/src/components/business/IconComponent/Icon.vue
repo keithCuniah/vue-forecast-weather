@@ -17,22 +17,22 @@
 </template>
 
 <script>
-import IMAGES_TYPE from '../../assets/constantsIcons';
-import SunIcon from '../../assets/Sun.vue';
-import CloudFogIcon from '../../assets/CloudFog.vue';
-import CloudMoonIcon from '../../assets/CloudMoon.vue';
-import CloudRainMoonIcon from '../../assets/CloudRainMoon.vue';
-import CloudRainSnowIcon from '../../assets/CloudRainSnow.vue';
-import CloudRainStormIcon from '../../assets/CloudRainStorm.vue';
-import CloudRainSunIcon from '../../assets/CloudRainSun.vue';
-import CloudRainWindIcon from '../../assets/CloudRainWind.vue';
-import CloudRainIcon from '../../assets/CloudRain.vue';
-import CloudSnowIcon from '../../assets/CloudSnow.vue';
-import CloudSunIcon from '../../assets/CloudSun.vue';
-import MoonIcon from '../../assets/Moon.vue';
-import WindIcon from '../../assets/Wind.vue';
-import WindSnowIcon from '../../assets/WindSnow.vue';
-import CloudIcon from '../../assets/Cloud.vue';
+import IMAGES_TYPE from '@/assets/constantsIcons';
+import SunIcon from '@/assets/Sun.vue';
+import CloudFogIcon from '@/assets/CloudFog.vue';
+import CloudMoonIcon from '@/assets/CloudMoon.vue';
+import CloudRainMoonIcon from '@/assets/CloudRainMoon.vue';
+import CloudRainSnowIcon from '@/assets/CloudRainSnow.vue';
+import CloudRainStormIcon from '@/assets/CloudRainStorm.vue';
+import CloudRainSunIcon from '@/assets/CloudRainSun.vue';
+import CloudRainWindIcon from '@/assets/CloudRainWind.vue';
+import CloudRainIcon from '@/assets/CloudRain.vue';
+import CloudSnowIcon from '@/assets/CloudSnow.vue';
+import CloudSunIcon from '@/assets/CloudSun.vue';
+import MoonIcon from '@/assets/Moon.vue';
+import WindIcon from '@/assets/Wind.vue';
+import WindSnowIcon from '@/assets/WindSnow.vue';
+import CloudIcon from '@/assets/Cloud.vue';
 
 export default {
   name: 'Icon',

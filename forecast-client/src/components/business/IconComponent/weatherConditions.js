@@ -1,6 +1,6 @@
 // This is the correspondence between weatherID and Images
 //  It was made with : https://openweathermap.org/weather-conditions
-import CONSTANTS_ICONS from '../../assets/constantsIcons';
+import CONSTANTS_ICONS from '@/assets/constantsIcons';
 
 const correspondingWeather = {
   THUNDERSTORM: [200, 201, 202, 210, 211, 212, 221, 230, 231, 232],

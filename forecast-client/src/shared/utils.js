@@ -1,14 +1,14 @@
-import weatherConditions from '../IconComponent/weatherConditions';
+import WEATHER_CONDITIIONS from '@/components/business/IconComponent/weatherConditions';
 
 const getIconByWeatherId = (weatherId) => {
   // This method return the corresponding icon depending on weather id
   // get corresponding weather from id
-  const currentWeather = Object.keys(weatherConditions.correspondingWeather).find((key) =>
-    weatherConditions.correspondingWeather[key].includes(weatherId)
+  const currentWeather = Object.keys(WEATHER_CONDITIIONS.correspondingWeather).find((key) =>
+    WEATHER_CONDITIIONS.correspondingWeather[key].includes(weatherId)
   );
 
   // get corresponging icon
-  const currentIcon = weatherConditions.correspondingIcon[currentWeather];
+  const currentIcon = WEATHER_CONDITIIONS.correspondingIcon[currentWeather];
   return currentIcon;
 };
 
@@ -36,6 +36,36 @@ const findWeekDateOfDate = (dateUTC) => {
 
   return weekday[dateUTC.getDay()];
 };
+
+const convertDegToCardinal = (winDeg) => {
+  const directions = [
+    'N',
+    'NNE',
+    'NE',
+    'ENE',
+    'E',
+    'ESE',
+    'SE',
+    'SSE',
+    'S',
+    'SSW',
+    'SW',
+    'WSW',
+    'W',
+    'WNW',
+    'NW',
+    'NNW',
+  ];
+  let section = parseInt(winDeg / 22.5 + 0.5, 10);
+
+  section = section % 16;
+
+  return directions[section];
+};
 export default {
-  getIconByWeatherId, shapeDate, compareDateToDateNow, findWeekDateOfDate
+  getIconByWeatherId,
+  shapeDate,
+  compareDateToDateNow,
+  findWeekDateOfDate,
+  convertDegToCardinal,
 };

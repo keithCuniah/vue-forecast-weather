@@ -7,21 +7,6 @@
         <button class='btn btn-primary' @click='showDrawer = !showDrawer'> Select Location </button>
       </div>
     </div>
-    <!-- <div class='container-fluid'> -->
-      <!-- <Formular
-        v-if='this.countries.length > 0'
-        :countries='countries'
-        @getSelectedCountry='(_country) => this.getCities(_country)'
-        :cities='cities'
-        @formIsReset='showCard = false'
-        @submittedForm='
-          (_submittedForm) => {
-            this.selectedLocation = JSON.parse(_submittedForm);
-            this.getWeatherAndForecast(_submittedForm);
-          }
-        '
-      /> -->
-    <!-- </div> -->
     <DrawerComponent
       :showDrawer='showDrawer'
       :position="'right'"
@@ -29,7 +14,6 @@
       :zIndex='1'>
       <template>
         <div class="drawer-content">
-          <!-- <FilterComponent :myFilter='this.countries' /> -->
           <FormularLocation
             :countries='countries'
             @selectedCountry='(_country) => this.getCities(_country)'
@@ -41,21 +25,6 @@
               }
             '
           />
-          <!-- <form>
-            <div class="form-group">
-              <div class="content">
-                <Search
-                  v-if="this.countries.length > 0"
-                  :componentId="'searchCountry'"
-                  :placeholder="'Search for a country'"
-                  :dataEntries="this.countries"
-                  :keyOfValueToShow="'country'"
-                  @selectedObject='(value) => this.daboudi = value'
-                  />
-                  {{this.daboudi}}
-              </div>
-            </div>
-          </form> -->
         </div>
       </template>
     </DrawerComponent>
@@ -81,13 +50,13 @@
 </template>
 
 <script>
-import CardInformation from '../components/Card/Card.vue';
-import CardHeader from '../components/Card/CardHeader.vue';
-import CardContent from '../components/Card/CardContent.vue';
-import CountryService from '../services/CountryService';
-import ForecastWeatherService from '../services/ForecastWeatherService';
-import DrawerComponent from '../components/DrawerComponent/DrawerComponent.vue';
-import FormularLocation from '../components/Formular/FormularLocation.vue';
+import CardInformation from '@/components/business/Card/Card.vue';
+import CardHeader from '@/components/business/Card/CardHeader.vue';
+import CardContent from '@/components/business/Card/CardContent.vue';
+import CountryService from '@/services/CountryService';
+import ForecastWeatherService from '@/services/ForecastWeatherService';
+import DrawerComponent from '@/components/generic/DrawerComponent/DrawerComponent.vue';
+import FormularLocation from '@/components/business/Formular/FormularLocation.vue';
 
 export default {
   name: 'WeatherForecastPage',
@@ -145,8 +114,7 @@ export default {
   opacity: 0;
 }
 .drawer-content{
-  display: flex;
-  flex-direction: column;
+  display: block;
   height: 100%;
 }
 </style>

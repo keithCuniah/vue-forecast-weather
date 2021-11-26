@@ -4,14 +4,14 @@
     <div class='widget-item'>
       <div class='icon-component'><IconComponent :name="forecastIcon" :colorFill="'white'" /></div>
     </div>
-    <div class='widget-item'> {{ tempMin | tempKelvinToCelcius }}</div>
     <div class='widget-item'> {{ tempMax | tempKelvinToCelcius }}</div>
+    <div class='widget-item'> {{ tempMin | tempKelvinToCelcius }}</div>
   </div>
 </template>
 
 <script>
-import IconComponent from './IconComponent/Icon.vue';
-import utils from './shared/utils';
+import IconComponent from '@/components/business/IconComponent/Icon.vue';
+import utils from '@/shared/utils';
 
 export default {
   name: 'Widget',
@@ -51,19 +51,19 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import '@/css/forecastWeather.scss';
 .widget-container {
   display: flex;
   flex: 1;
   flex-direction: column;
   justify-content: space-around;
-  max-width: 900px;
   align-items: center;
   .icon-component {
     width: 3em;
   }
 }
 .widget-item {
-  font-family: 'Roboto', sans-serif;
+  font-family: $font-style;
   font-size: 15px;
   font-style: normal;
   font-weight: 400;
@@ -72,10 +72,10 @@ export default {
   text-align: left;
   color: white;
   &:nth-last-child(2) {
-    color:#FF0000
+    color:$temp-hot;
   }
   &:last-child {
-    color:#00FFFF
+    color:$temp-cold;
   }
 }
 @media (max-width: 500px) {

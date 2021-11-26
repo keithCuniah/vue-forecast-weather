@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import WidgetComponent from '../Widget.vue';
+import WidgetComponent from '@/components/business/WidgetComponent/Widget.vue';
 
 export default {
   name: 'CardContent',
@@ -36,7 +36,6 @@ export default {
   display: flex;
   flex: 1;
   gap: 20px;
-  flex-direction: row;
   flex-wrap: wrap;
 }
 

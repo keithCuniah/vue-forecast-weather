@@ -3,6 +3,8 @@
     <InputComponent
       :componentId='inputId'
       :placeholder='placeholderInput'
+      :valueToFilter='keyOfValueToShow'
+      :selectedValue='selectedValue'
       @searchText='
         (value) => {
           this.queryText = value;
@@ -16,7 +18,7 @@
         v-for='elem in responseQueryText'
         :key='elem.id'
         :value='elem'
-        @click="clickEvent(elem)"
+        @click='clickEvent(elem)'
       >
         <div>{{ elem[keyOfValueToShow] }}</div>
       </div>
@@ -52,6 +54,7 @@ export default {
   data() {
     return {
       queryText: '',
+      selectedValue: '',
       isDropdownVisible: 'none',
     };
   },
@@ -62,13 +65,17 @@ export default {
       };
     },
     inputId() {
-      return `${this.componentId}-input`;
+      return `${this.componentId}Input`;
     },
     responseQueryText() {
       if (this.queryText.length > 0) {
-        return this.dataEntries.filter((obj) =>
+        const dataFiltered = this.dataEntries.filter((obj) =>
           obj[this.keyOfValueToShow].includes(this.queryText.toUpperCase())
         );
+        if (dataFiltered.length === 0) {
+          return [{ id: -1, [this.keyOfValueToShow]: `No data match with ${this.queryText}` }];
+        }
+        return dataFiltered;
       }
       return this.dataEntries;
     },
@@ -78,9 +85,13 @@ export default {
       if (this.isDropdownVisible === 'none') this.isDropdownVisible = 'block';
       else this.isDropdownVisible = 'none';
     },
-    clickEvent(value) {
-      this.$emit('selectedObject', value);
-    }
+    clickEvent(selectedElem) {
+      if (selectedElem.id !== -1) {
+        this.selectedValue = selectedElem[this.keyOfValueToShow];
+        this.$emit('selectedObject', selectedElem);
+        this.showDropdown();
+      }
+    },
   },
 };
 </script>
@@ -88,13 +99,13 @@ export default {
 <style lang='scss' scoped>
 .search-container {
   position: relative;
-  display: inline-block;
+  display: block;
 }
 .dropdown-content {
   display: var(--display-dropdown);
   position: absolute;
   background-color: #f9f9f9;
-  min-width: 160px;
+  width: 100%;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   padding: 12px 16px;
   z-index: 1;

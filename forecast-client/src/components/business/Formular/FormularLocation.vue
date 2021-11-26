@@ -1,28 +1,29 @@
 <template>
+<div>
+  <div class='p-3 mb-2 bg-light'>
+    <h2 class='displqy-9 fw-bold'>Select a location</h2>
+    <p class='lead'>Choose a country and then a city</p>
+  </div>
   <form class='formular' @submit='onSubmit' @reset='onReset' v-if='showForm'>
     <div class='form-group' v-if='countriesAreLoaded'>
-      <div class='content'>
-        <Search
-          :componentId="'searchCountry'"
-          :placeholder="'Search for a country'"
-          :dataEntries='this.countries'
-          :keyOfValueToShow="'country'"
-          @selectedObject='(value) => onEventCountry(value)'
-        />
-      </div>
+      <Search
+        :componentId="'searchCountry'"
+        :placeholder="'Search for a country'"
+        :dataEntries='this.countries'
+        :keyOfValueToShow="'country'"
+        @selectedObject='(value) => onEventCountry(value)'
+      />
     </div>
     <div class='form-group'>
-      <div class='content'>
-        <Search
-          :key='this.cityKey'
-          :componentId="'searchCity'"
-          :placeholder="'Search for a city'"
-          :dataEntries='this.cities'
-          :keyOfValueToShow="'name'"
-          @selectedObject='(value) => onEventCity(value)'
-          :disabled='!citiesAreLoaded'
-        />
-      </div>
+      <Search
+        :key='this.cityKey'
+        :componentId="'searchCity'"
+        :placeholder="'Search for a city'"
+        :dataEntries='this.cities'
+        :keyOfValueToShow="'name'"
+        @selectedObject='(value) => onEventCity(value)'
+        :disabled='!citiesAreLoaded'
+      />
     </div>
     <div class='d-inline-flex'>
       <div class='m-1'>
@@ -39,11 +40,12 @@
       </div>
     </div>
   </form>
+</div>
 </template>
 
 <script>
 import { BButton } from 'bootstrap-vue';
-import Search from '../SearchComponent/SearchComponent.vue';
+import Search from '@/components/generic/SearchComponent/SearchComponent.vue';
 
 export default {
   name: 'FormularLocation',
@@ -110,7 +112,6 @@ export default {
     },
     onEventCity(jsonValue) {
       // When user have selected a city country from a country
-      console.log(jsonValue);
       const strValue = JSON.stringify(jsonValue);
       this.selectedForm.selectedCity = strValue;
     },
@@ -122,12 +123,11 @@ export default {
 .formular {
   display: flex;
   width: 100%;
-  justify-content: center;
   flex-direction: column;
+  padding: 2em;
   .form-group {
-    display: flex;
-    justify-content: center;
-    flex: 1;
+    display: block;
+    margin-bottom: 1em;
   }
 }
 </style>

@@ -69,7 +69,7 @@ export default {
     overflow: hidden;
     height: 100%;
     padding-left: 0;
-    background: $bg-white-ob1;
+    background: $bg-white;
     z-index: var(--z-index-drawer);
   }
 
@@ -93,7 +93,7 @@ export default {
     top: 0;
     width: 0; /* initially */
     height: 100%;
-    background: $bg-dark-ob1;
+    background: $bg-dark;
     opacity: 0.3;
     z-index: var(--z-index-mask);
   }

@@ -1,21 +1,21 @@
 <template>
   <div class='card-info'>
-    <div class='icon-component'><IconComponent :name='weatherIcon' :colorFill="'white'"  /></div>
+    <div class="icon-component"><IconComponent :name="weatherIcon" :colorFill="'white'" /></div>
     <div class='descriptions'>
       <span class='description-item'
         >{{ city.name | capitalizedStr }}, {{ country | capitalizedStr }}
       </span>
       <span class='description-item'>{{ currentInfo.temp | tempKelvinToCelcius }}</span>
-      <span class='description-item'>{{ currentInfo.humidity | formatHumidity }} </span>
-      <span class='description-item'>{{ currentInfo.uvi | formatUVI }} </span>
-      <span class='description-item'>{{ { ...currentInfo.wind } | formatWind }} </span>
+      <span class='description-item'>{{ currentInfo.humidity | formatHumidity }}</span>
+      <span class='description-item'>{{ currentInfo.uvi | formatUVI }}</span>
+      <span class='description-item'>{{ currentInfo.wind | formatWind }}</span>
     </div>
   </div>
 </template>
 
 <script>
-import IconComponent from '../IconComponent/Icon.vue';
-import utils from '../shared/utils';
+import IconComponent from '@/components/business/IconComponent/Icon.vue';
+import utils from '@/shared/utils';
 
 export default {
   name: 'CardHeader',
@@ -36,17 +36,13 @@ export default {
   computed: {
     currentInfo() {
       const {
-        temp,
-        humidity,
-        uvi,
-        wind_deg,
-        wind_speed
+        temp, humidity, uvi, wind_deg, wind_speed
       } = { ...this.currentWeather };
       return {
         temp,
         humidity,
         uvi,
-        wind: { wind_deg, wind_speed },
+        wind: { wind_dir: utils.convertDegToCardinal(wind_deg), wind_speed },
       };
     },
     weatherIcon() {
@@ -57,24 +53,26 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import '@/css/forecastWeather.scss';
 // I am not using the margin class of bootstrap here to keep the same distance as the wireframe
 .card-info {
   display: flex;
   flex: 1;
   .icon-component {
     display: flex;
-    width: 8em;
-    margin-right: 1.5em;
+    min-width: 107px;
+    margin-right: 1em;
   }
   .descriptions {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
+    max-width: 295px;
     color: white;
   }
 }
 .description-item {
-  font-family: 'Roboto', sans-serif;
+  font-family: $font-style;
   font-style: normal;
   text-align: left;
   letter-spacing: 0em;
