@@ -2,18 +2,26 @@ import axios from 'axios';
 
 export default {
   async getWeatherForecastByCity(weatherOrForcast, selectedCity) {
-    const {
-      id,
-      country,
-      coord
-    } = JSON.parse(selectedCity);
+    const { id, country, coord } = JSON.parse(selectedCity);
 
-    const headers = {
+    const params = {
       id,
       country,
-      ...coord
+      ...coord,
     };
-    const res = await axios.get(`http://localhost:4000/api/${weatherOrForcast}/${id}`, { headers });
-    return res;
+
+    const promise = await axios
+      .get(`http://localhost:4000/api/${weatherOrForcast}/${id}`, { params })
+      .then((res) => res.data)
+      .catch((err) => {
+        if (err.response.status === 404) {
+          throw new Error(
+            `{ID : ${id}, country : ${country}, coordinate : ${JSON.stringify(coord)}} not found`
+          );
+        }
+        throw err;
+      });
+
+    return promise;
   },
 };

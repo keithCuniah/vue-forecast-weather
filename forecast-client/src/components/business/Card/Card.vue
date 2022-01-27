@@ -22,7 +22,7 @@ export default {
     flex-direction: column;
     gap: 35px;
     max-width: 900px;
-    min-width: 330px;
+    flex: 1;
     min-height: 311px;
     padding: 1.5em;
     border-radius: 20px;
