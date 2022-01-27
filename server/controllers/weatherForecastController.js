@@ -4,11 +4,12 @@ function weatherForecastController(apiKey) {
 // Controller for getting current weather and forecast data (7 days) by coordinate
 
   const getWeatherForecastByCoord = async (req, res) => {
+    const {lat, lon} = req.query;
     const params = {
       appid: apiKey,
       uniots: 'metric',
-      lat: req.headers.lat,
-      lon: req.headers.lon,
+      lat,
+      lon,
       exclude: 'minutely,hourly,alerts',
     };
 

@@ -47,7 +47,7 @@ app.get('/api', (req, res) => {
         </li>
 
         <li>To get the forecast of a specific location (country or city)
-          <b>/api/forecasst/{localisation_id}</b>
+          <b>/api/forecast/{localisation_id}</b>
         </li>
       </ul>
     </div>`

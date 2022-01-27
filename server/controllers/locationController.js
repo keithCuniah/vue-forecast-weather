@@ -3,7 +3,7 @@ function locationController(listOfCountries, objectGroupByCountry) {
 
   async function getCountries(req, res) {
     try {
-      res.send(listOfCountries);
+      res.send(listOfCountries.sort((a, b) => a.country.localeCompare(b.country)));
     } catch (err) {
       res.send("Ressources not found, can't find any country");
       console.log(` Call in error : ${err}`);
@@ -13,7 +13,7 @@ function locationController(listOfCountries, objectGroupByCountry) {
   async function getCitiesByCountry(req, res) {
     const country = req.params.countryUnicode.toUpperCase();
     try {
-      const cities = objectGroupByCountry[country];
+      const cities = objectGroupByCountry[country].sort((a, b) => a.name.localeCompare(b.name));
       res.json(cities);
     } catch (err) {
       res.send(
