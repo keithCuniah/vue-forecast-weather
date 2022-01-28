@@ -1,9 +1,5 @@
 <template>
 <div>
-  <div class='p-3 mb-2 bg-light'>
-    <h2 class='display-9 fw-bold'>Select a location</h2>
-    <p class='lead'>Choose a country and then a city</p>
-  </div>
   <form class='formular' @submit='onSubmit' @reset='onReset' v-if='showForm'>
     <div class='form-group' v-if='countriesAreLoaded'>
       <Search

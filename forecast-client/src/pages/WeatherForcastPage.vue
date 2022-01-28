@@ -14,6 +14,10 @@
       :zIndex='1'
     >
       <template>
+        <div class='p-3 mb-2 bg-light'>
+          <h2 class='display-9 fw-bold'>Select a location</h2>
+          <p class='lead'>Choose a country and then a city</p>
+        </div>
         <div class='drawer-content'>
           <FormularLocation
             :key='key'
@@ -40,9 +44,7 @@
       </CardInformation>
       <CardInformation v-if='showErrorCard'>
         <template v-slot:content>
-          <p class="label-error">
-            NO DATA
-          </p>
+          <p class='label-error'>NO DATA</p>
         </template>
       </CardInformation>
     </transition>
@@ -82,10 +84,12 @@ export default {
       key: 0,
     };
   },
-  async created() {
-    await CountryService.getCountries().then((response) => {
-      this.countries = response.data;
-    });
+  created() {
+    CountryService.getCountries()
+      .then((response) => {
+        this.countries = response;
+      })
+      .catch((err) => console.log('daboudi', err));
   },
   methods: {
     onSubmittedFormEvent(_submittedForm) {
@@ -94,17 +98,21 @@ export default {
       this.showDrawer = false;
       this.key += 1; // to rerender the formular and not sqve previous data
     },
-    async getCities(_country) {
-      await CountryService.getCitiesByCountry(_country).then((response) => {
-        this.cities = response.data;
-      });
+    getCities(_country) {
+      CountryService.getCitiesByCountry(_country)
+        .then((response) => {
+          this.cities = response;
+        })
+        .catch(() => {
+          this.showCard = false;
+          this.showErrorCard = true;
+        });
     },
     getWeatherAndForecast(selectedForm) {
       const { selectedCity } = { ...JSON.parse(selectedForm) };
       ForecastWeatherService.getWeatherForecastByCity('weather', selectedCity)
         .then((response) => {
           this.weatherAndForecast = response;
-          console.log(this.weatherAndForecast);
           this.showCard = true;
           this.showErrorCard = false;
         })
