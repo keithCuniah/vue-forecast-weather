@@ -89,7 +89,7 @@ export default {
       .then((response) => {
         this.countries = response;
       })
-      .catch((err) => console.log('daboudi', err));
+      .catch((err) => console.log('Service : getCountry => ', err));
   },
   methods: {
     onSubmittedFormEvent(_submittedForm) {

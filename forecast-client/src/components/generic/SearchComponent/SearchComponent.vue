@@ -68,16 +68,13 @@ export default {
       return `${this.componentId}Input`;
     },
     responseQueryText() {
-      if (this.queryText.length > 0) {
-        const dataFiltered = this.dataEntries.filter((obj) =>
-          obj[this.keyOfValueToShow].includes(this.queryText.toUpperCase())
-        );
-        if (dataFiltered.length === 0) {
-          return [{ id: -1, [this.keyOfValueToShow]: `No data match with ${this.queryText}` }];
-        }
-        return dataFiltered;
+      const dataFiltered = this.dataEntries.filter((obj) =>
+        (obj[this.keyOfValueToShow].toUpperCase()).includes(this.queryText.toUpperCase())
+      );
+      if (this.queryText.length > 0 && dataFiltered.length === 0) {
+        return [{ id: -1, [this.keyOfValueToShow]: `No data match with ${this.queryText}` }];
       }
-      return this.dataEntries;
+      return dataFiltered;
     },
   },
   methods: {
