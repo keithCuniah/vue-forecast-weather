@@ -1,7 +1,7 @@
 <template>
   <div class='input-container'>
     <label :for='this.componentId'
-      >The {{ this.valueToFilter }} selected is : {{ this.selectedValue }}
+      >The {{ this.labelToFilter }} selected is : <b>{{ this.selectedValue }}</b>
     </label>
     <input
       :id='this.componentId'
@@ -27,6 +27,10 @@ export default {
       default: 'Enter your query',
     },
     valueToFilter: {
+      type: String,
+      required: true,
+    },
+    labelToFilter: {
       type: String,
       required: true,
     },

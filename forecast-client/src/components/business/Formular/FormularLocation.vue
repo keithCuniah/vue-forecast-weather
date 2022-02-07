@@ -7,6 +7,7 @@
         :placeholder="'Search for a country'"
         :dataEntries='this.countries'
         :keyOfValueToShow="'country'"
+        :labelToFilter="'country'"
         @selectedObject='(value) => onEventCountry(value)'
       />
     </div>
@@ -17,6 +18,7 @@
         :placeholder="'Search for a city'"
         :dataEntries='this.cities'
         :keyOfValueToShow="'name'"
+        :labelToFilter="'city'"
         @selectedObject='(value) => onEventCity(value)'
         :disabled='!citiesAreLoaded'
       />

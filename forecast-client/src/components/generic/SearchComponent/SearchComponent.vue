@@ -4,6 +4,7 @@
       :componentId='inputId'
       :placeholder='placeholderInput'
       :valueToFilter='keyOfValueToShow'
+      :labelToFilter='labelToFilter'
       :selectedValue='selectedValue'
       @searchText='
         (value) => {
@@ -39,6 +40,10 @@ export default {
       required: true,
     },
     keyOfValueToShow: {
+      type: String,
+      required: true,
+    },
+    labelToFilter: {
       type: String,
       required: true,
     },
