@@ -38,7 +38,8 @@
 }
 
 .sun{
-  animation: draw-sun 10s infinite;
+  animation: draw-sun 10s infinite alternate;
+  fill: white;
   transform-origin: 50% 50%;
 }
 @keyframes draw-sun{
@@ -47,5 +48,6 @@
   }
   to {
     transform: rotate(360deg);
+    fill: yellow;
   }
 }
